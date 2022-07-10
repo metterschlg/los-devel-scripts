@@ -2,6 +2,12 @@
 sudo apt install git
 # To debug SELinux (audit2allow tool)
 sudo apt install policycoreutils-python-utils
+
+# Create patch to adjust ripee's build environment script
+echo "Patching ripee's build environment script: "
+echo "  1. Use apt instead of deprecated apt-get"
+echo "  2. Limit compiler cache to 50GB instead of 100GB"
+echo "  3. Clone using https instead of git to not require a github account"
 cat <<EOF > ~/ripee-script.patch
 diff --git a/build_environment.sh b/build_environment.sh
 index e1c9b0c..2cb75f1 100755
@@ -46,21 +52,31 @@ EOF
 git clone https://github.com/ripee/scripts
 cd scripts/
 patch < ~/ripee-script.patch
-./build_environment.sh 
-./lineage-18.1.sh 
+
+# Setup build environment
+./build_environment.sh
+# Initialize LineageOS 18.1 environment
+# As this will also download the sources it can take hours - depending on line speed
+./lineage-18.1.sh
+
+# This is required for Ubuntu 22.04
 sudo ln -s /usr/bin/python3 /usr/bin/python
+
+# Setup local manifest
 cd ~/android/lineage-18.1/.repo
-git clone https://github.com/universal5433/local_manifests -b lineage-18.1
+git clone -b lineage-18.1 https://github.com/metterschlg/local_manifests
 cd local_manifests/
 # Just keep the manifest we need to build for gts28ltexx
 rm gts210ltexx.xml gts210wifi.xml gts28wifi.xml tbelteskt.xml tre3calteskt.xml trelteskt.xml treltexx.xml trhpltexx.xml
 cd ../..
 source build/envsetup.sh 
 repo sync
+# Select SM-T715 for the build
 breakfast gts28ltexx
-# see https://github.com/metterschlg/los-devel-scripts/blob/main/blob-patching/patch_libsec-ril.sh
-# for instructions how to create the patched libsec-ril.so
-cp ~/libsec-ril.so ~/android/lineage-18.1/samsung/gts28ltexx/proprietary/system/lib/libsec-ril.so
-cp ~/libsec-ril.so ~/android/lineage-18.1/samsung/gts28ltexx/proprietary/system/vendor/lib/libsec-ril.so
-brunch gts28ltexx
+# Start build - this might take many hours for the initial build
+time brunch gts28ltexx
+# To create engineering builds, alternatively use
+# TARGET_BUILD_TYPE=debug TARGET_BUILD_VARIANT=eng m bacon
+
+# Display the generated ROM file(s)
 ls -alh out/target/product/gts28ltexx/lineage-18.1-*-UNOFFICIAL-gts28ltexx.zip
