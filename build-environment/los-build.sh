@@ -62,14 +62,28 @@ patch < ~/ripee-script.patch
 # This is required for Ubuntu 22.04
 sudo ln -s /usr/bin/python3 /usr/bin/python
 
+# Setup build configuration
+cd ~/android/lineage-18.1/
+source build/envsetup.sh
+
 # Setup local manifest
-cd ~/android/lineage-18.1/.repo
+cd .repo
 git clone -b lineage-18.1 https://github.com/metterschlg/local_manifests
 cd local_manifests/
 # Just keep the manifest we need to build for gts28ltexx
 rm gts210ltexx.xml gts210wifi.xml gts28wifi.xml tbelteskt.xml tre3calteskt.xml trelteskt.xml treltexx.xml trhpltexx.xml
-cd ../..
-source build/envsetup.sh 
+
+# Apply the patch at: https://github.com/DerpFest-11/packages_modules_NetworkStack/commit/22fd53a977eeaf4e36be7bf6358ecf2c2737fa5e
+# It's required to prevent tcp/ip error messages that are flooding the logcat.
+cd ~
+git clone https://github.com/DerpFest-11/packages_modules_NetworkStack
+cd packages_modules_NetworkStack/
+git show 22fd53a977eeaf4e36be7bf6358ecf2c2737fa5e  > ~/TcpSocketTracker_optout.patch
+cd ~/android/lineage-18.1/packages/modules/NetworkStack
+git apply ~/TcpSocketTracker_optout.patch
+
+# Pull the latest sources - can take hours depending on network connection
+croot
 repo sync
 # Select SM-T715 for the build
 breakfast gts28ltexx
