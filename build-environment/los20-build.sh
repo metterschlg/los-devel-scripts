@@ -29,6 +29,9 @@ rm gts210ltexx.xml gts210wifi.xml gts28wifi.xml tbelteskt.xml tre3calteskt.xml t
 croot
 repo sync
 
+# Since June 2024 the LineageOS-UL trees are no longer synced with upstream security patches -> perform manually
+source los20ul-fixes.sh
+
 # for samsung_slsi libfimg4x: Fix a -Wunreachable-code-loop-increment compilation error
 repopick -f 331661
 
