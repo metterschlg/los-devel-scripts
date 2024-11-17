@@ -11,7 +11,7 @@ merge_upstream() {
   REPO_URL=${1//\//_}
   UPSTREAM=`git remote | grep upstream`
   if [ x${UPSTREAM} == "x" ]; then
-    git remote add upstream https://github.com/LineageOS/$REPO_URL
+    git remote add upstream https://github.com/LineageOS/android_$REPO_URL
   fi
   git fetch upstream
   git merge remotes/upstream/lineage-21.0
