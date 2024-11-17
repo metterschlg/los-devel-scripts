@@ -32,14 +32,22 @@ repo sync
 # Since September 2024 the LineageOS-UL trees are no longer synced with upstream security patches -> perform manually
 source los21ul-fixes.sh
 
+# Various hardware platform patches
+curl -o ~/hardware_samsung.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/20/exynos5433/hardware_samsung.diff
+cd hardware/samsung/
+patch -p1 < ~/hardware_samsung.diff
+croot
+curl -o ~/hardware_samsung_slsi_exynos.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/20/exynos5433/hardware_samsung_slsi_exynos.diff
+cd hardware/samsung_slsi/exynos/
+patch -p1 < ~/hardware_samsung_slsi_exynos.diff
+croot
+curl -o ~/hardware_samsung_slsi_exynos5433.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/20/exynos5433/hardware_samsung_slsi_exynos5433.diff
+cd hardware/samsung_slsi/exynos5433
+patch -p1 < ~/Downloads/5433-patches/hardware_samsung_slsi_exynos5433.diff
+croot
+
 # for samsung_slsi libfimg4x: Fix a -Wunreachable-code-loop-increment compilation error
 repopick -f 331661
-
-# Patch to fix OS crash to MPPthread.
-curl -o ~/remove-MPPThread.patch https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/20/exynos5433/remove-MPPThread.patch
-cd hardware/samsung_slsi/exynos
-patch -p1 < ~/remove-MPPThread.patch
-croot
 
 # Select SM-T715 for the build
 breakfast gts28ltexx
