@@ -33,17 +33,21 @@ repo sync
 source los21ul-fixes.sh
 
 # Various hardware platform patches
-curl -o ~/hardware_samsung.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/20/exynos5433/hardware_samsung.diff
+curl -o ~/hardware_samsung.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/21/exynos5433/hardware_samsung.diff
 cd hardware/samsung/
 patch -p1 < ~/hardware_samsung.diff
 croot
-curl -o ~/hardware_samsung_slsi_exynos.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/20/exynos5433/hardware_samsung_slsi_exynos.diff
+curl -o ~/hardware_samsung_slsi_exynos.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/21/exynos5433/hardware_samsung_slsi_exynos.diff
 cd hardware/samsung_slsi/exynos/
 patch -p1 < ~/hardware_samsung_slsi_exynos.diff
 croot
-curl -o ~/hardware_samsung_slsi_exynos5433.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/20/exynos5433/hardware_samsung_slsi_exynos5433.diff
+curl -o ~/hardware_samsung_slsi_exynos5433.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/21/exynos5433/hardware_samsung_slsi_exynos5433.diff
 cd hardware/samsung_slsi/exynos5433
-patch -p1 < ~/Downloads/5433-patches/hardware_samsung_slsi_exynos5433.diff
+patch -p1 < ~/hardware_samsung_slsi_exynos5433.diff
+croot
+curl -o ~/hardware_lineage_interfaces.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/21/UL-patches-2024/hardware_lineage_interfaces.diff
+cd hardware/lineage/interfaces
+patch -p1 < ~/hardware_lineage_interfaces.diff
 croot
 
 # for samsung_slsi libfimg4x: Fix a -Wunreachable-code-loop-increment compilation error
