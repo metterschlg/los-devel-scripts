@@ -1,89 +1,49 @@
 #!/bin/sh
 # October & November 2024 Android & LineageOS security patches
 
+export BASEDIR=~/android/lineage-21.0/
+
+merge_upstream() {
+  echo "$1"
+  cd $1
+  # As we originally checked out with --depth=1 we need the full trees now to be able to merge
+  git fetch --unshallow losul
+  REPO_URL=${1//\//_}
+  UPSTREAM=`git remote | grep upstream`
+  if [ x${UPSTREAM} == "x" ]; then
+    git remote add upstream https://github.com/LineageOS/$REPO_URL
+  fi
+  git fetch upstream
+  git merge remotes/upstream/lineage-21.0
+  cd $BASEDIR
+}
+
 export GIT_EDITOR='true git commit'
-
-cd ~/android/lineage-21.0/
+cd $BASEDIR
 
 # October 2024 & November 2024
-cd frameworks/base
-UPSTREAM=`git remote | grep upstream`
-if [ x${UPSTREAM} == "x" ]; then
-    git remote add upstream https://github.com/LineageOS/android_frameworks_base
-fi
-git fetch upstream
-git merge remotes/upstream/lineage-21.0
-cd ~/android/lineage-21.0/
+merge_upstream frameworks/base
 
 # October 2024
-cd system/core
-UPSTREAM=`git remote | grep upstream`
-if [ x${UPSTREAM} == "x" ]; then
-    git remote add upstream https://github.com/LineageOS/android_system_core
-fi
-git fetch upstream
-git merge remotes/upstream/lineage-21.0
-cd ~/android/lineage-21.0/
+merge_upstream system/core
 
 # October 2024 & November 2024
-cd device/lineage/sepolicy
-UPSTREAM=`git remote | grep upstream`
-if [ x${UPSTREAM} == "x" ]; then
-    git remote add upstream https://github.com/LineageOS/android_device_lineage_sepolicy
-fi
-git fetch upstream
-git merge remotes/upstream/lineage-21.0
-cd ~/android/lineage-21.0/
+merge_upstream device/lineage/sepolicy
 
 # October 2024 & November 2024
-cd vendor/lineage
-UPSTREAM=`git remote | grep upstream`
-if [ x${UPSTREAM} == "x" ]; then
-    git remote add upstream https://github.com/LineageOS/android_vendor_lineage
-fi
-git fetch upstream
-git merge remotes/upstream/lineage-21.0
-cd ~/android/lineage-21.0/
+merge_upstream vendor/lineage
 
 # October 2024
-cd packages/modules/Bluetooth
-UPSTREAM=`git remote | grep upstream`
-if [ x${UPSTREAM} == "x" ]; then
-  git remote add upstream  https://github.com/LineageOS/android_packages_modules_Bluetooth
-fi
-git fetch upstream
-git merge remotes/upstream/lineage-21.0
-cd ~/android/lineage-21.0/
+merge_upstream packages/modules/Bluetooth
 
 # November 2024
-cd system/netd
-UPSTREAM=`git remote | grep upstream`
-if [ x${UPSTREAM} == "x" ]; then
-  git remote add upstream  https://github.com/LineageOS/android_system_netd
-fi
-git fetch upstream
-git merge remotes/upstream/lineage-21.0
-cd ~/android/lineage-21.0/
+merge_upstream system/netd
 
 # November 2024
-cd packages/modules/Connectivity
-UPSTREAM=`git remote | grep upstream`
-if [ x${UPSTREAM} == "x" ]; then
-  git remote add upstream  https://github.com/LineageOS/android_packages_modules_Connectivity
-fi
-git fetch upstream
-git merge remotes/upstream/lineage-21.0
-cd ~/android/lineage-21.0/
+merge_upstream packages/modules/Connectivity
 
 # November 2024
-cd frameworks/native
-UPSTREAM=`git remote | grep upstream`
-if [ x${UPSTREAM} == "x" ]; then
-  git remote add upstream  https://github.com/LineageOS/android_frameworks_native
-fi
-git fetch upstream
-git merge remotes/upstream/lineage-21.0
-cd ~/android/lineage-21.0/
+merge_upstream frameworks/native
 
 # TODO: verify if the following patches are required for LineageOS 21
 
