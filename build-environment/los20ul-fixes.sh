@@ -1,22 +1,10 @@
 #!/bin/sh
-# October 2024 Android & LineageOS security patch
-#repopick -f -t T_asb_2024-10
+# October and November 2024 Android & LineageOS security patches
 
-# android_frameworks_base
-#Applying change number 405358...
-#Change status is MERGED. Skipping the cherry pick.
-#Use -f to force this pick.
-#Applying change number 405359...
-#Change status is MERGED. Skipping the cherry pick.
-#Use -f to force this pick.
-#Applying change number 405360...
-#Change status is MERGED. Skipping the cherry pick.
-#Use -f to force this pick.
-#Applying change number 405361...
-#Change status is MERGED. Skipping the cherry pick.
-#Use -f to force this pick.
 export GIT_EDITOR='true git commit'
 cd ~/android/lineage-20.0/
+
+# October & November 2024
 cd frameworks/base
 UPSTREAM=`git remote | grep upstream`
 if [ x${UPSTREAM} == "x" ]; then
@@ -25,20 +13,7 @@ fi
 git fetch upstream
 git merge remotes/upstream/lineage-20.0
 
-# android_libcore (already merged as not in lineageos-ul)
-#Applying change number 405362...
-#Change status is MERGED. Skipping the cherry pick.
-#Use -f to force this pick.
-
-# android_packages_apps_Settings (already merged as not in lineageos-ul)
-#Applying change number 405363...
-#Change status is MERGED. Skipping the cherry pick.
-#Use -f to force this pick.
-
-# android_packages_modules_Bluetooth
-#Applying change number 405364...
-#Change status is MERGED. Skipping the cherry pick.
-#Use -f to force this pick.
+# October 2024
 cd ~/android/lineage-20.0/
 cd packages/modules/Bluetooth
 UPSTREAM=`git remote | grep upstream`
@@ -48,10 +23,25 @@ fi
 git fetch upstream
 git merge remotes/upstream/lineage-20.0
 
-# android_build (already merged as not in lineageos-ul)
-#Applying change number 405365...
-#Change status is MERGED. Skipping the cherry pick.
-#Use -f to force this pick.
+# November 2024
+cd ~/android/lineage-20.0/
+cd packages/modules/Wifi
+UPSTREAM=`git remote | grep upstream`
+if [ x${UPSTREAM} == "x" ]; then
+  git remote add upstream  https://github.com/LineageOS/android_packages_modules_Wifi
+fi
+git fetch upstream
+git merge remotes/upstream/lineage-20.0
+
+# November 2024
+cd ~/android/lineage-20.0/
+cd vendor/lineage
+UPSTREAM=`git remote | grep upstream`
+if [ x${UPSTREAM} == "x" ]; then
+  git remote add upstream  https://github.com/LineageOS/android_vendor_lineage
+fi
+git fetch upstream
+git merge remotes/upstream/lineage-20.0
 
 # The following commits as part of the October updates broke gts28ltexx RIL, reverting
 cd ~/android/lineage-20.0/vendor/lineage
