@@ -107,18 +107,3 @@ merge_upstream packages/modules/Connectivity
 
 # November 2024
 merge_upstream frameworks/native
-
-# TODO: verify if the following patches are required for LineageOS 21
-
-## The following commits as part of the October updates broke gts28ltexx RIL, reverting
-#cd vendor/lineage
-## https://github.com/LineageOS-UL/android_vendor_lineage/commit/eaa2614343ac62523b6e8f0aeba6ca9adb0c837e
-#git revert eaa2614343ac62523b6e8f0aeba6ca9adb0c837e
-#git rm overlay/wifionly/packages/apps/Settings/res/values/config.xml
-#git revert --continue
-
-## https://github.com/LineageOS-UL/android_vendor_lineage/commit/9a0a021c7edbdc3924e0d2bea68540cd19c7b29e
-#git revert 9a0a021c7edbdc3924e0d2bea68540cd19c7b29e
-#git rm overlay/wifionly/frameworks/base/core/res/res/values/config.xml
-#git revert --continue
-#cd ~/android/lineage-21.0/
