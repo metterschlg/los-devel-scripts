@@ -101,6 +101,12 @@ cat <<EOF>>/tmp/default_xml_adb.patch
    <project path="packages/modules/AdServices" name="platform/packages/modules/AdServices" groups="pdk-cw-fs,pdk-fs,sysui-studio" remote="aosp" />
    <project path="packages/modules/AppSearch" name="platform/packages/modules/AppSearch" groups="pdk" remote="aosp" />
    <project path="packages/modules/ArtPrebuilt" name="platform/packages/modules/ArtPrebuilt" groups="pdk" clone-depth="1" remote="aosp" />
+EOF
 cd android
 patch -p0 < /tmp/default_xml_adb.patch
+cd $BASEDIR
+repo sync --force-sync packages/modules/adb
+cd packages/modules/adb
+git fetch --unshallow losul
+git checkout remotes/losul/lineage-21.0-qpr1
 cd $BASEDIR
