@@ -1,10 +1,10 @@
 #!/bin/sh
-# October and November 2024 Android & LineageOS security patches
+# December 2024 Android & LineageOS security patches
 
 export BASEDIR=~/android/lineage-20.0/
 
 merge_upstream() {
-  echo "$1"
+  echo -e "\n=== $1 ==="
   cd $1
   # If we originally checked out with --depth=1 we need the full trees now to be able to merge
   git fetch --unshallow losul
@@ -19,16 +19,10 @@ merge_upstream() {
 }
 
 export GIT_EDITOR='true git commit'
-cd ~/android/lineage-20.0/
+cd $BASEDIR
 
-# October & November 2024
+# December 2024
 merge_upstream frameworks/base
-
-# October 2024
 merge_upstream packages/modules/Bluetooth
-
-# November 2024
-merge_upstream packages/modules/Wifi
-
-# November 2024
 merge_upstream vendor/lineage
+merge_upstream packages/inputmethods/LatinIME
