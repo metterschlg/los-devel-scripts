@@ -22,7 +22,10 @@ export GIT_EDITOR='true git commit'
 cd $BASEDIR
 
 # December 2024
-merge_upstream frameworks/base
 merge_upstream packages/modules/Bluetooth
 merge_upstream vendor/lineage
 merge_upstream packages/inputmethods/LatinIME
+# December 2024 & January 2025
+merge_upstream frameworks/base
+# January 2025
+merge_upstream frameworks/native
