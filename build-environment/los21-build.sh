@@ -25,29 +25,57 @@ cd local_manifests/
 # Just keep the manifest we need to build for gts28ltexx
 rm gts210ltexx.xml gts210wifi.xml gts28wifi.xml tbelteskt.xml tre3calteskt.xml trelteskt.xml treltexx.xml trhpltexx.xml
 
-# Pull the latest sources - can take hours depending on network connection
 croot
-repo sync
+# Since September 2024 the LineageOS-UL trees are no longer synced with upstream tracked repos -> perform manually
+cat <<EOF>/tmp/manifest.patch
+diff --git a/default.xml b/default.xml
+index 19c3190..e37eca0 100644
+--- a/default.xml
++++ b/default.xml
+@@ -141,7 +141,7 @@
+   <project path="external/compiler-rt" name="platform/external/compiler-rt" groups="pdk" remote="aosp" />
+   <project path="external/ComputeLibrary" name="platform/external/ComputeLibrary" groups="pdk-lassen,pdk-gs-arm" remote="aosp" />
+   <project path="external/connectedappssdk" name="platform/external/connectedappssdk" groups="pdk" remote="aosp" />
+-  <project path="external/conscrypt" name="platform/external/conscrypt" groups="pdk" remote="aosp" />
++  <project path="external/conscrypt" name="LineageOS/android_external_conscrypt" groups="pdk" />
+   <project path="external/cpu_features" name="platform/external/cpu_features" groups="pdk" remote="aosp" />
+   <project path="external/cpuinfo" name="platform/external/cpuinfo" groups="pdk" remote="aosp" />
+   <project path="external/crcalc" name="platform/external/crcalc" groups="pdk" remote="aosp" />
+@@ -197,7 +197,7 @@
+   <project path="external/geojson-jackson" name="platform/external/geojson-jackson" groups="pdk" remote="aosp" />
+   <project path="external/geonames" name="platform/external/geonames" groups="pdk" remote="aosp" />
+   <project path="external/gflags" name="platform/external/gflags" groups="pdk" remote="aosp" />
+-  <project path="external/giflib" name="platform/external/giflib" groups="pdk,qcom_msm8x26" remote="aosp" />
++  <project path="external/giflib" name="LineageOS/android_external_giflib" groups="pdk,qcom_msm8x26" />
+   <project path="external/glide" name="platform/external/glide" groups="pdk" remote="aosp" />
+   <project path="external/go-cmp" name="platform/external/go-cmp" groups="pdk" remote="aosp" />
+   <project path="external/golang-protobuf" name="platform/external/golang-protobuf" groups="pdk" remote="aosp" />
+EOF
+cd .repo/manifests
+git apply /tmp/manifest.patch
+croot
+# Pull the latest sources
+repo sync --force-sync
 
 # Since September 2024 the LineageOS-UL trees are no longer synced with upstream security patches -> perform manually
 source los21ul-fixes.sh
 
 # Various hardware platform patches
-curl -o ~/hardware_samsung.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/21/exynos5433/hardware_samsung.diff
+curl -o /tmp/hardware_samsung.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/21/exynos5433/hardware_samsung.diff
 cd hardware/samsung/
-patch -p1 < ~/hardware_samsung.diff
+patch -p1 < /tmp/hardware_samsung.diff
 croot
-curl -o ~/hardware_samsung_slsi_exynos.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/21/exynos5433/hardware_samsung_slsi_exynos.diff
+curl -o /tmp/hardware_samsung_slsi_exynos.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/21/exynos5433/hardware_samsung_slsi_exynos.diff
 cd hardware/samsung_slsi/exynos/
-patch -p1 < ~/hardware_samsung_slsi_exynos.diff
+patch -p1 < /tmp/hardware_samsung_slsi_exynos.diff
 croot
-curl -o ~/hardware_samsung_slsi_exynos5433.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/21/exynos5433/hardware_samsung_slsi_exynos5433.diff
+curl -o /tmp/hardware_samsung_slsi_exynos5433.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/21/exynos5433/hardware_samsung_slsi_exynos5433.diff
 cd hardware/samsung_slsi/exynos5433
-patch -p1 < ~/hardware_samsung_slsi_exynos5433.diff
+patch -p1 < /tmp/hardware_samsung_slsi_exynos5433.diff
 croot
-curl -o ~/hardware_lineage_interfaces.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/21/UL-patches-2024/hardware_lineage_interfaces.diff
+curl -o /tmp/hardware_lineage_interfaces.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/21/UL-patches-2024/hardware_lineage_interfaces.diff
 cd hardware/lineage/interfaces
-patch -p1 < ~/hardware_lineage_interfaces.diff
+patch -p1 < /tmp/hardware_lineage_interfaces.diff
 croot
 
 # for samsung_slsi libfimg4x: Fix a -Wunreachable-code-loop-increment compilation error
