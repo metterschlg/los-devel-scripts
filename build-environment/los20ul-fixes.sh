@@ -21,12 +21,12 @@ merge_upstream() {
 export GIT_EDITOR='true git commit'
 cd $BASEDIR
 
-# December 2024 & February 2025
+# December 2024 & February and March 2025
 merge_upstream packages/modules/Bluetooth
 # December 2024
 merge_upstream vendor/lineage
 merge_upstream packages/inputmethods/LatinIME
-# December 2024, January and February 2025
+# December 2024, January, February and March 2025
 merge_upstream frameworks/base
 # January 2025
 merge_upstream frameworks/native
