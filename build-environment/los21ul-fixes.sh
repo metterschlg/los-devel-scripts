@@ -29,17 +29,13 @@ merge_upstream system/core
 
 # October 2024 & November 2024
 merge_upstream device/lineage/sepolicy
-cd device/lineage/sepolicy
-git add common/vendor/file_contexts
-git merge --continue
-cd $BASEDIR
+git -C device/lineage/sepolicy add common/vendor/file_contexts
+git -C device/lineage/sepolicy merge --continue
 
 # October-November 2024 & January 2025
 merge_upstream vendor/lineage
-cd vendor/lineage
-git add build/soong/Android.bp
-git merge --continue
-cd $BASEDIR
+git -C vendor/lineage add build/soong/Android.bp
+git -C vendor/lineage merge --continue
 
 # October 2024 & February-March 2025
 merge_upstream packages/modules/Bluetooth
