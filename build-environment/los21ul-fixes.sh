@@ -1,5 +1,5 @@
 #!/bin/sh
-# October-December 2024 Android & LineageOS security patches
+# October 2024-March 2025 Android & LineageOS security patches
 
 export BASEDIR=~/android/lineage-21.0/
 
@@ -21,10 +21,10 @@ merge_upstream() {
 export GIT_EDITOR='true git commit'
 cd $BASEDIR
 
-# October-December 2024 & January 2025
+# October 2024-March 2025
 merge_upstream frameworks/base
 
-# October 2024
+# October 2024 & February 2025
 merge_upstream system/core
 
 # October 2024 & November 2024
@@ -37,27 +37,11 @@ cd $BASEDIR
 # October-November 2024 & January 2025
 merge_upstream vendor/lineage
 cd vendor/lineage
-cat <<EOF>>/tmp/vendor_lineage_build_soong_Android_bp.patch
-diff --git a/build/soong/Android.bp b/build/soong/Android.bp
-index 1e2832d9..f8bf4429 100644
---- a/build/soong/Android.bp
-+++ b/build/soong/Android.bp
-@@ -642,6 +642,7 @@ stagefright_qcom_legacy {
-         uses_qcom_bsp_legacy: {
-             cppflags: ["-DQCOM_BSP_LEGACY"],
-         },
-+    }
- }
- 
- soong_config_module_type {
-EOF
-git apply /tmp/vendor_lineage_build_soong_Android_bp.patch
 git add build/soong/Android.bp
 git merge --continue
-rm /tmp/vendor_lineage_build_soong_Android_bp.patch
 cd $BASEDIR
 
-# October 2024
+# October 2024 & February-March 2025
 merge_upstream packages/modules/Bluetooth
 
 # November 2024
@@ -66,7 +50,7 @@ merge_upstream system/netd
 # November 2024
 merge_upstream packages/modules/Connectivity
 
-# November-December 2024
+# November-December 2024 & March 2025
 merge_upstream frameworks/native
 
 # January 2025

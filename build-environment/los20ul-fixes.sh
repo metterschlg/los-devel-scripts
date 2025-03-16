@@ -1,5 +1,5 @@
 #!/bin/sh
-# December 2024 Android & LineageOS security patches
+# December 2024-March 2025 Android & LineageOS security patches
 
 export BASEDIR=~/android/lineage-20.0/
 
