@@ -1,5 +1,6 @@
+
 #!/bin/sh
-# October 2024-March 2025 Android & LineageOS security patches
+# April 2025 Android & LineageOS security patches
 
 export BASEDIR=~/android/lineage-21.0/
 
@@ -21,42 +22,16 @@ merge_upstream() {
 export GIT_EDITOR='true git commit'
 cd $BASEDIR
 
-# October 2024-March 2025
+# April 2025
 merge_upstream frameworks/base
 
-# October 2024 & February 2025
-merge_upstream system/core
-
-# October 2024 & November 2024
-merge_upstream device/lineage/sepolicy
-git -C device/lineage/sepolicy add common/vendor/file_contexts
-git -C device/lineage/sepolicy merge --continue
-
-# October-November 2024 & January 2025
-merge_upstream vendor/lineage
-git -C vendor/lineage add build/soong/Android.bp
-git -C vendor/lineage merge --continue
-
-# October 2024 & February-March 2025
-merge_upstream packages/modules/Bluetooth
-
-# November 2024
-merge_upstream system/netd
-
-# November 2024
-merge_upstream packages/modules/Connectivity
-
-# November-December 2024 & March 2025
+# April 2025
 merge_upstream frameworks/native
 
-# January 2025
-REMOTE=$(git -C hardware/qcom-caf/common remote -v | grep -v upstream | head -1 | awk {'print $1'})
-if [ $REMOTE = "github" ]; then
-    git -C hardware/qcom-caf/common remote rename github losul
-fi
-merge_upstream hardware/qcom-caf/common
+# April 2025
+merge_upstream packages/modules/Bluetooth
 
-# January 2025
+# April 2025
 merge_upstream packages/services/Telephony
 
 # Fix ADB Breakage post QPR1 by reverting to QPR1 tree
