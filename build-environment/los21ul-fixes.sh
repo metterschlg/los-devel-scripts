@@ -1,6 +1,6 @@
 
 #!/bin/sh
-# April 2025 Android & LineageOS security patches
+# May 2025 Android & LineageOS security patches
 
 export BASEDIR=~/android/lineage-21.0/
 
@@ -22,13 +22,13 @@ merge_upstream() {
 export GIT_EDITOR='true git commit'
 cd $BASEDIR
 
-# April 2025
+# April & May 2025
 merge_upstream frameworks/base
 
 # April 2025
 merge_upstream frameworks/native
 
-# April 2025
+# April & May 2025
 merge_upstream packages/modules/Bluetooth
 
 # April 2025
