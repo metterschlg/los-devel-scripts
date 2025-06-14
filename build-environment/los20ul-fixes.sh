@@ -1,5 +1,5 @@
 #!/bin/sh
-# May 2025 Android & LineageOS security patches
+# June 2025 Android & LineageOS security patches
 
 export BASEDIR=~/android/lineage-20.0/
 
@@ -21,15 +21,21 @@ merge_upstream() {
 export GIT_EDITOR='true git commit'
 cd $BASEDIR
 
-# April & May 2025
+# April & May & June 2025
 merge_upstream frameworks/base
-# April & May 2025
+# April & May & June 2025
 merge_upstream packages/modules/Bluetooth
 # May 2025
 merge_upstream packages/modules/Wifi
+# June 2025
+merge_upstream frameworks/av
+# June 2025
+merge_upstream packages/modules/Connectivity
 
-# April & May 2025 own fork tracking
+# April & May & June 2025 own fork tracking
 cat <<EOF>/tmp/android-fork-tracking.patch
+diff --git a/default.xml b/default.xml
+index 7dfed8f..fac4dc9 100644
 --- a/default.xml
 +++ b/default.xml
 @@ -173,7 +173,7 @@
@@ -41,6 +47,15 @@ cat <<EOF>/tmp/android-fork-tracking.patch
    <project path="external/fsck_msdos" name="platform/external/fsck_msdos" groups="pdk" remote="aosp" />
    <project path="external/fsverity-utils" name="platform/external/fsverity-utils" groups="pdk" remote="aosp" />
    <project path="external/FXdiv" name="platform/external/FXdiv" groups="pdk" remote="aosp" />
+@@ -878,7 +878,7 @@
+   <project path="packages/apps/HTMLViewer" name="platform/packages/apps/HTMLViewer" groups="pdk-fs" remote="aosp" />
+   <project path="packages/apps/ImsServiceEntitlement" name="platform/packages/apps/ImsServiceEntitlement" groups="pdk-fs" remote="aosp" />
+   <project path="packages/apps/KeyChain" name="LineageOS/android_packages_apps_KeyChain" groups="pdk-fs" />
+-  <project path="packages/apps/ManagedProvisioning" name="platform/packages/apps/ManagedProvisioning" groups="pdk-fs" remote="aosp" />
++  <project path="packages/apps/ManagedProvisioning" name="LineageOS/android_packages_apps_ManagedProvisioning" groups="pdk-fs" />
+   <project path="packages/apps/Messaging" name="LineageOS/android_packages_apps_Messaging" groups="pdk-fs" />
+   <project path="packages/apps/Music" name="platform/packages/apps/Music" groups="pdk-fs" remote="aosp" />
+   <project path="packages/apps/MusicFX" name="platform/packages/apps/MusicFX" groups="pdk-fs" remote="aosp" />
 @@ -926,7 +926,7 @@
    <project path="packages/modules/ExtServices" name="platform/packages/modules/ExtServices" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
    <project path="packages/modules/GeoTZ" name="platform/packages/modules/GeoTZ" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
@@ -54,3 +69,5 @@ EOF
 git -C .repo/manifests apply /tmp/android-fork-tracking.patch
 repo sync --force-sync external/freetype
 repo sync --force-sync packages/modules/IntentResolver
+repo sync --force-sync packages/modules/IntentResolver
+repo sync --force-sync packages/apps/ManagedProvisioning
