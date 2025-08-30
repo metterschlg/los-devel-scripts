@@ -1,6 +1,5 @@
-
 #!/bin/sh
-# June 2025 Android & LineageOS security patches
+# August 2025 Android & LineageOS security patches
 
 export BASEDIR=~/android/lineage-21.0/
 
@@ -22,7 +21,7 @@ merge_upstream() {
 export GIT_EDITOR='true git commit'
 cd $BASEDIR
 
-# April & May & June 2025
+# April & May & June 2025 & August 2025
 merge_upstream frameworks/base
 # April 2025
 merge_upstream frameworks/native
@@ -34,6 +33,8 @@ merge_upstream packages/services/Telephony
 merge_upstream art
 # June 2025
 merge_upstream frameworks/av
+# August 2025
+merge_upstream vendor/lineage
 
 # June 2025 - track LineageOS forks for packages/apps/ManagedProvisioning
 cat <<EOF>/tmp/manifest.patch
