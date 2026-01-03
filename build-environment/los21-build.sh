@@ -26,34 +26,6 @@ cd local_manifests/
 rm gts210ltexx.xml gts210wifi.xml gts28wifi.xml tbelteskt.xml tre3calteskt.xml trelteskt.xml treltexx.xml trhpltexx.xml
 
 croot
-# Since September 2024 the LineageOS-UL trees are no longer synced with upstream tracked repos -> perform manually
-cat <<EOF>/tmp/manifest.patch
-diff --git a/default.xml b/default.xml
-index 19c3190..e37eca0 100644
---- a/default.xml
-+++ b/default.xml
-@@ -141,7 +141,7 @@
-   <project path="external/compiler-rt" name="platform/external/compiler-rt" groups="pdk" remote="aosp" />
-   <project path="external/ComputeLibrary" name="platform/external/ComputeLibrary" groups="pdk-lassen,pdk-gs-arm" remote="aosp" />
-   <project path="external/connectedappssdk" name="platform/external/connectedappssdk" groups="pdk" remote="aosp" />
--  <project path="external/conscrypt" name="platform/external/conscrypt" groups="pdk" remote="aosp" />
-+  <project path="external/conscrypt" name="LineageOS/android_external_conscrypt" groups="pdk" />
-   <project path="external/cpu_features" name="platform/external/cpu_features" groups="pdk" remote="aosp" />
-   <project path="external/cpuinfo" name="platform/external/cpuinfo" groups="pdk" remote="aosp" />
-   <project path="external/crcalc" name="platform/external/crcalc" groups="pdk" remote="aosp" />
-@@ -197,7 +197,7 @@
-   <project path="external/geojson-jackson" name="platform/external/geojson-jackson" groups="pdk" remote="aosp" />
-   <project path="external/geonames" name="platform/external/geonames" groups="pdk" remote="aosp" />
-   <project path="external/gflags" name="platform/external/gflags" groups="pdk" remote="aosp" />
--  <project path="external/giflib" name="platform/external/giflib" groups="pdk,qcom_msm8x26" remote="aosp" />
-+  <project path="external/giflib" name="LineageOS/android_external_giflib" groups="pdk,qcom_msm8x26" />
-   <project path="external/glide" name="platform/external/glide" groups="pdk" remote="aosp" />
-   <project path="external/go-cmp" name="platform/external/go-cmp" groups="pdk" remote="aosp" />
-   <project path="external/golang-protobuf" name="platform/external/golang-protobuf" groups="pdk" remote="aosp" />
-EOF
-cd .repo/manifests
-git apply /tmp/manifest.patch
-croot
 # Pull the latest sources
 repo sync --force-sync
 
@@ -84,7 +56,7 @@ repopick -f 331661
 # Select SM-T715 for the build
 breakfast gts28ltexx
 # Start build - this might take many hours for the initial build
-time brunch gts28ltexx
+brunch gts28ltexx
 # To create engineering builds, alternatively use
 # TARGET_BUILD_TYPE=debug TARGET_BUILD_VARIANT=eng m bacon
 
