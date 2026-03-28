@@ -37,7 +37,7 @@ curl -o /tmp/hardware_samsung.diff https://raw.githubusercontent.com/retiredtab/
 cd hardware/samsung/
 patch -p1 < /tmp/hardware_samsung.diff
 croot
-curl -o /tmp/hardware_samsung_slsi_exynos.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/21/exynos5433/hardware_samsung_slsi_exynos.diff
+curl -o /tmp/hardware_samsung_slsi_exynos.diff https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/21/exynos5420/hardware_samsung_slsi_exynos.diff
 cd hardware/samsung_slsi/exynos/
 patch -p1 < /tmp/hardware_samsung_slsi_exynos.diff
 croot

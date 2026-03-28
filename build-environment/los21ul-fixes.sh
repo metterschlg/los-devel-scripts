@@ -1,5 +1,5 @@
 #!/bin/sh
-# December 2025 Android & LineageOS security patches
+# March 2026 Android & LineageOS security patches
 
 export BASEDIR=~/android/lineage-21.0/
 
@@ -21,9 +21,9 @@ merge_upstream() {
 export GIT_EDITOR='true git commit'
 cd $BASEDIR
 
-# April & May & June & August & September & December 2025
+# April & May & June & August & September & December 2025 & March 2026
 merge_upstream frameworks/base
-# April 2025 & September 2025 & December 2025
+# April 2025 & September 2025 & December 2025 & March 2026
 merge_upstream frameworks/native
 # September 2025 & December 2025
 merge_upstream frameworks/opt/telephony
@@ -33,7 +33,7 @@ merge_upstream packages/modules/Bluetooth
 merge_upstream packages/services/Telephony
 # June 2025 & September 2025
 merge_upstream art
-# June 2025 & September 2025
+# June 2025 & September 2025 & March 2026
 merge_upstream frameworks/av
 # August 2025 & September 2025 & December 2025
 merge_upstream vendor/lineage
@@ -46,11 +46,35 @@ merge_upstream vendor/lineage
 #                 external/sqlite
 #                 packages/apps/CertInstaller
 #                 vendor/apn
+# March 2026 - track LineageOS forks for
+#              external/cldr
+#              external/dng_sdk
+#              external/icu
+#              packages/modules/Virtualization
+#              system/timezone
 cat <<EOF>/tmp/default-manifest.patch
 diff --git a/default.xml b/default.xml
-index 4803dd4..482917f 100644
+index 4803dd4..70ad194 100644
 --- a/default.xml
 +++ b/default.xml
+@@ -136,7 +136,7 @@
+   <project path="external/cbor-java" name="platform/external/cbor-java" groups="pdk" remote="aosp" />
+   <project path="external/chromium-trace" name="platform/external/chromium-trace" groups="pdk" remote="aosp" />
+   <project path="external/clang" name="platform/external/clang" groups="pdk" remote="aosp" />
+-  <project path="external/cldr" name="platform/external/cldr" groups="pdk" remote="aosp" />
++  <project path="external/cldr" name="LineageOS/android_external_cldr" groups="pdk" />
+   <project path="external/cn-cbor" name="platform/external/cn-cbor" groups="pdk" remote="aosp" />
+   <project path="external/compiler-rt" name="platform/external/compiler-rt" groups="pdk" remote="aosp" />
+   <project path="external/ComputeLibrary" name="platform/external/ComputeLibrary" groups="pdk-lassen,pdk-gs-arm" remote="aosp" />
+@@ -235,7 +235,7 @@
+   <project path="external/horologist" name="platform/external/horologist" groups="pdk" remote="aosp" />
+   <project path="external/hyphenation-patterns" name="platform/external/hyphenation-patterns" groups="pdk" remote="aosp" />
+   <project path="external/icing" name="platform/external/icing" groups="pdk" remote="aosp" />
+-  <project path="external/icu" name="platform/external/icu" groups="pdk" remote="aosp" />
++  <project path="external/icu" name="LineageOS/android_external_icu" groups="pdk" />
+   <project path="external/igt-gpu-tools" name="platform/external/igt-gpu-tools" groups="pdk" remote="aosp" />
+   <project path="external/ImageMagick" name="platform/external/ImageMagick" groups="pdk" remote="aosp" />
+   <project path="external/image_io" name="platform/external/image_io" groups="pdk" remote="aosp" />
 @@ -816,7 +816,7 @@
    <project path="external/sonic" name="platform/external/sonic" groups="pdk" remote="aosp" />
    <project path="external/sonivox" name="platform/external/sonivox" groups="pdk" remote="aosp" />
@@ -87,6 +111,24 @@ index 4803dd4..482917f 100644
    <project path="packages/modules/common" name="LineageOS/android_packages_modules_common" groups="pdk-cw-fs,pdk-fs" />
    <project path="packages/modules/ConfigInfrastructure" name="platform/packages/modules/ConfigInfrastructure" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
    <!--<project path="packages/modules/Connectivity" name="LineageOS/android_packages_modules_Connectivity" groups="pdk-cw-fs,pdk-fs" />-->
+@@ -1104,7 +1104,7 @@
+   <project path="packages/modules/ThreadNetwork" name="platform/packages/modules/ThreadNetwork" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
+   <project path="packages/modules/Uwb" name="platform/packages/modules/Uwb" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
+   <project path="packages/modules/UprobeStats" name="platform/packages/modules/UprobeStats" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
+-  <project path="packages/modules/Virtualization" name="platform/packages/modules/Virtualization" groups="pdk" remote="aosp" />
++  <project path="packages/modules/Virtualization" name="LineageOS/android_packages_modules_Virtualization" groups="pdk" />
+   <project path="packages/modules/vndk" name="platform/packages/modules/vndk" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
+   <project path="packages/modules/Wifi" name="LineageOS/android_packages_modules_Wifi" groups="pdk-cw-fs,pdk-fs,sysui-studio" />
+   <project path="packages/providers/BlockedNumberProvider" name="LineageOS/android_packages_providers_BlockedNumberProvider" groups="pdk-fs" />
+@@ -1250,7 +1250,7 @@
+   <project path="system/server_configurable_flags" name="platform/system/server_configurable_flags" groups="pdk" remote="aosp" />
+   <project path="system/teeui" name="platform/system/teeui" groups="pdk" remote="aosp" />
+   <project path="system/testing/gtest_extras" name="platform/system/testing/gtest_extras" groups="pdk" remote="aosp" />
+-  <project path="system/timezone" name="platform/system/timezone" groups="pdk" remote="aosp" />
++  <project path="system/timezone" name="LineageOS/android_system_timezone" groups="pdk" />
+   <project path="system/tools/aidl" name="platform/system/tools/aidl" groups="pdk" remote="aosp" />
+   <project path="system/tools/hidl" name="platform/system/tools/hidl" groups="pdk" remote="aosp" />
+   <project path="system/tools/mkbootimg" name="LineageOS/android_system_tools_mkbootimg" groups="pdk" />
 EOF
 cat <<EOF>/tmp/lineage-manifest.patch
 diff --git a/snippets/lineage.xml b/snippets/lineage.xml
@@ -109,6 +151,11 @@ repo sync --force-sync packages/modules/CellBroadcastService
 repo sync --force-sync external/sqlite
 repo sync --force-sync packages/apps/CertInstaller
 repo sync --force-sync vendor/apn
+repo sync --force-sync external/cldr
+repo sync --force-sync external/dng_sdk
+repo sync --force-sync external/icu
+repo sync --force-sync packages/modules/Virtualization
+repo sync --force-sync system/timezone
 
 # Fix ADB Breakage post QPR1 by reverting to QPR1 tree
 echo -e "\n=== packages/modules/adb ==="
