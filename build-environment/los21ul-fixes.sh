@@ -1,5 +1,5 @@
 #!/bin/sh
-# April 2026 Android & LineageOS security patches
+# May 2026 Android & LineageOS security patches
 
 export BASEDIR=~/android/lineage-21.0/
 
@@ -21,11 +21,11 @@ merge_upstream() {
 export GIT_EDITOR='true git commit'
 cd $BASEDIR
 
-# April & May & June & August & September & December 2025 & March 2026 & April 2026
+# April & May & June & August & September & December 2025 & March 2026 & April 2026 & May 2026
 merge_upstream frameworks/base
 # April 2025 & September 2025 & December 2025 & March 2026
 merge_upstream frameworks/native
-# September 2025 & December 2025
+# September 2025 & December 2025 & May 2026
 merge_upstream frameworks/opt/telephony
 # April & May & June & September & November & December 2025
 merge_upstream packages/modules/Bluetooth
@@ -35,8 +35,11 @@ merge_upstream packages/services/Telephony
 merge_upstream art
 # June 2025 & September 2025 & March 2026
 merge_upstream frameworks/av
-# August 2025 & September 2025 & December 2025
+# August 2025 & September 2025 & December 2025 & May 2026
 merge_upstream vendor/lineage
+
+# After May 2026 vendor/lineage patch, need to run envsetup.sh again so that repopick keeps working
+source build/envsetup.sh
 
 # June 2025 - track LineageOS forks for
 #                 packages/apps/ManagedProvisioning
@@ -52,12 +55,14 @@ merge_upstream vendor/lineage
 #              external/icu
 #              packages/modules/Virtualization
 #              system/timezone
+# May 2026 - track LineageOS forks for
+#            external/expat
 cat <<EOF>/tmp/default-manifest.patch
 diff --git a/default.xml b/default.xml
-index 4803dd4..70ad194 100644
+index 4803dd4..d1c1a26 100644
 --- a/default.xml
 +++ b/default.xml
-@@ -136,7 +136,7 @@
+@@ -136,7 +137,7 @@
    <project path="external/cbor-java" name="platform/external/cbor-java" groups="pdk" remote="aosp" />
    <project path="external/chromium-trace" name="platform/external/chromium-trace" groups="pdk" remote="aosp" />
    <project path="external/clang" name="platform/external/clang" groups="pdk" remote="aosp" />
@@ -66,7 +71,16 @@ index 4803dd4..70ad194 100644
    <project path="external/cn-cbor" name="platform/external/cn-cbor" groups="pdk" remote="aosp" />
    <project path="external/compiler-rt" name="platform/external/compiler-rt" groups="pdk" remote="aosp" />
    <project path="external/ComputeLibrary" name="platform/external/ComputeLibrary" groups="pdk-lassen,pdk-gs-arm" remote="aosp" />
-@@ -235,7 +235,7 @@
+@@ -176,7 +177,7 @@
+   <project path="external/escapevelocity" name="platform/external/escapevelocity" groups="pdk" remote="aosp" />
+   <project path="external/ethtool" name="platform/external/ethtool" groups="pdk" remote="aosp" />
+   <project path="external/exoplayer" name="platform/external/exoplayer" groups="pdk" remote="aosp" />
+-  <project path="external/expat" name="platform/external/expat" groups="pdk" remote="aosp" />
++  <project path="external/expat" name="LineageOS/android_external_expat" groups="pdk" />
+   <project path="external/f2fs-tools" name="platform/external/f2fs-tools" groups="pdk" remote="aosp" />
+   <project path="external/fastrpc" name="platform/external/fastrpc" groups="pdk" remote="aosp" />
+   <project path="external/fdlibm" name="platform/external/fdlibm" groups="pdk" remote="aosp" />
+@@ -235,7 +236,7 @@
    <project path="external/horologist" name="platform/external/horologist" groups="pdk" remote="aosp" />
    <project path="external/hyphenation-patterns" name="platform/external/hyphenation-patterns" groups="pdk" remote="aosp" />
    <project path="external/icing" name="platform/external/icing" groups="pdk" remote="aosp" />
@@ -75,7 +89,7 @@ index 4803dd4..70ad194 100644
    <project path="external/igt-gpu-tools" name="platform/external/igt-gpu-tools" groups="pdk" remote="aosp" />
    <project path="external/ImageMagick" name="platform/external/ImageMagick" groups="pdk" remote="aosp" />
    <project path="external/image_io" name="platform/external/image_io" groups="pdk" remote="aosp" />
-@@ -816,7 +816,7 @@
+@@ -816,7 +817,7 @@
    <project path="external/sonic" name="platform/external/sonic" groups="pdk" remote="aosp" />
    <project path="external/sonivox" name="platform/external/sonivox" groups="pdk" remote="aosp" />
    <project path="external/speex" name="platform/external/speex" groups="pdk" remote="aosp" />
@@ -84,7 +98,7 @@ index 4803dd4..70ad194 100644
    <project path="external/spdx-tools" name="platform/external/spdx-tools" groups="pdk" remote="aosp" />
    <project path="external/squashfs-tools" name="platform/external/squashfs-tools" groups="pdk" remote="aosp" />
    <project path="external/stardoc" name="platform/external/stardoc" groups="pdk" remote="aosp" />
-@@ -1025,7 +1025,7 @@
+@@ -1025,7 +1026,7 @@
    <project path="packages/apps/Car/SystemUpdater" name="platform/packages/apps/Car/SystemUpdater" groups="pdk-fs" remote="aosp" />
    <project path="packages/apps/CarrierConfig" name="platform/packages/apps/CarrierConfig" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
    <project path="packages/apps/CellBroadcastReceiver" name="LineageOS/android_packages_apps_CellBroadcastReceiver" groups="pdk-cw-fs,pdk-fs" />
@@ -93,7 +107,7 @@ index 4803dd4..70ad194 100644
    <project path="packages/apps/Contacts" name="LineageOS/android_packages_apps_Contacts" groups="pdk-fs" />
    <project path="packages/apps/Dialer" name="LineageOS/android_packages_apps_Dialer" groups="pdk-fs" />
    <project path="packages/apps/DocumentsUI" name="LineageOS/android_packages_apps_DocumentsUI" groups="pdk-cw-fs,pdk-fs" />
-@@ -1033,7 +1033,7 @@
+@@ -1033,7 +1034,7 @@
    <project path="packages/apps/HTMLViewer" name="platform/packages/apps/HTMLViewer" groups="pdk-fs" remote="aosp" />
    <project path="packages/apps/ImsServiceEntitlement" name="platform/packages/apps/ImsServiceEntitlement" groups="pdk-fs" remote="aosp" />
    <project path="packages/apps/KeyChain" name="platform/packages/apps/KeyChain" groups="pdk-fs" remote="aosp" />
@@ -102,7 +116,7 @@ index 4803dd4..70ad194 100644
    <project path="packages/apps/Messaging" name="LineageOS/android_packages_apps_Messaging" groups="pdk-fs" />
    <project path="packages/apps/Music" name="platform/packages/apps/Music" groups="pdk-fs" remote="aosp" />
    <project path="packages/apps/MusicFX" name="platform/packages/apps/MusicFX" groups="pdk-fs" remote="aosp" />
-@@ -1070,7 +1070,7 @@
+@@ -1070,7 +1071,7 @@
    <project path="packages/modules/ArtPrebuilt" name="platform/packages/modules/ArtPrebuilt" groups="pdk" clone-depth="1" remote="aosp" />
    <!--<project path="packages/modules/Bluetooth" name="LineageOS/android_packages_modules_Bluetooth" groups="pdk" />-->
    <project path="packages/modules/CaptivePortalLogin" name="platform/packages/modules/CaptivePortalLogin" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
@@ -111,7 +125,7 @@ index 4803dd4..70ad194 100644
    <project path="packages/modules/common" name="LineageOS/android_packages_modules_common" groups="pdk-cw-fs,pdk-fs" />
    <project path="packages/modules/ConfigInfrastructure" name="platform/packages/modules/ConfigInfrastructure" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
    <!--<project path="packages/modules/Connectivity" name="LineageOS/android_packages_modules_Connectivity" groups="pdk-cw-fs,pdk-fs" />-->
-@@ -1104,7 +1104,7 @@
+@@ -1104,7 +1105,7 @@
    <project path="packages/modules/ThreadNetwork" name="platform/packages/modules/ThreadNetwork" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
    <project path="packages/modules/Uwb" name="platform/packages/modules/Uwb" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
    <project path="packages/modules/UprobeStats" name="platform/packages/modules/UprobeStats" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
@@ -120,7 +134,7 @@ index 4803dd4..70ad194 100644
    <project path="packages/modules/vndk" name="platform/packages/modules/vndk" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
    <project path="packages/modules/Wifi" name="LineageOS/android_packages_modules_Wifi" groups="pdk-cw-fs,pdk-fs,sysui-studio" />
    <project path="packages/providers/BlockedNumberProvider" name="LineageOS/android_packages_providers_BlockedNumberProvider" groups="pdk-fs" />
-@@ -1250,7 +1250,7 @@
+@@ -1250,7 +1251,7 @@
    <project path="system/server_configurable_flags" name="platform/system/server_configurable_flags" groups="pdk" remote="aosp" />
    <project path="system/teeui" name="platform/system/teeui" groups="pdk" remote="aosp" />
    <project path="system/testing/gtest_extras" name="platform/system/testing/gtest_extras" groups="pdk" remote="aosp" />
@@ -156,6 +170,7 @@ repo sync --force-sync external/dng_sdk
 repo sync --force-sync external/icu
 repo sync --force-sync packages/modules/Virtualization
 repo sync --force-sync system/timezone
+repo sync --force-sync external/expat
 
 # Fix ADB Breakage post QPR1 by reverting to QPR1 tree
 echo -e "\n=== packages/modules/adb ==="
