@@ -35,11 +35,9 @@ source los20ul-fixes.sh
 # for samsung_slsi libfimg4x: Fix a -Wunreachable-code-loop-increment compilation error
 repopick -f 331661
 
-# Patch to fix OS crash to MPPthread.
-curl -o ~/remove-MPPThread.patch https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/20/exynos5433/remove-MPPThread.patch
-cd hardware/samsung_slsi/exynos
-patch -p1 < ~/remove-MPPThread.patch
-croot
+# Patch to fix OS crash to MPPthread + fix memory leak in media playing
+curl -o /tmp/hardware_samsung_slsi_exynos.patch https://raw.githubusercontent.com/retiredtab/LineageOS-build-manifests/main/21/exynos5420/hardware_samsung_slsi_exynos.diff
+git -C hardware/samsung_slsi/exynos apply /tmp/hardware_samsung_slsi_exynos.patch
 
 # Select SM-T715 for the build
 breakfast gts28ltexx
