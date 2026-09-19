@@ -1,5 +1,5 @@
 #!/bin/sh
-# June 2026 Android & LineageOS security patches
+# September 2026 Android & LineageOS security patches
 
 export BASEDIR=~/android/lineage-21.0/
 
