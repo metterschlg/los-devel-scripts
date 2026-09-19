@@ -1,5 +1,5 @@
 #!/bin/sh
-# June 2026 Android & LineageOS security patches
+# September 2026 Android & LineageOS security patches
 
 export BASEDIR=~/android/lineage-20.0/
 
@@ -26,13 +26,15 @@ resync_repo() {
 export GIT_EDITOR='true git commit'
 cd $BASEDIR
 
-# April & May & June 2025 & August 2025 & September 2025 & December 2025 & May 2026 & June 2026
+# April & May & June 2025 & August 2025 & September 2025 & December 2025 & May 2026
+# & June 2026 & September 2026
 merge_upstream frameworks/base
 # April & May & June 2025 & September 2025 & November 2025 & December 2025 & June 2026
+# & September 2026
 merge_upstream packages/modules/Bluetooth
 # May 2025 & September 2025
 merge_upstream packages/modules/Wifi
-# June 2025 & September 2025 & May 2026
+# June 2025 & September 2025 & May 2026 & September 2026
 merge_upstream frameworks/av
 # June 2025
 merge_upstream packages/modules/Connectivity
@@ -48,10 +50,10 @@ merge_upstream vendor/lineage
 # After May 2026 vendor/lineage patch, need to run envsetup.sh again so that repopick keeps working
 source build/envsetup.sh
 
-# April & May & June & September & December 2025 & June 2026 own fork tracking
+# April & May & June & September & December 2025 & June 2026 & September 2026 own fork tracking
 cat <<EOF>/tmp/manifests.patch
 diff --git a/default.xml b/default.xml
-index 7dfed8f..edadd5e 100644
+index 7dfed8f..618cb81 100644
 --- a/default.xml
 +++ b/default.xml
 @@ -161,7 +161,7 @@
@@ -72,9 +74,12 @@ index 7dfed8f..edadd5e 100644
    <project path="external/fsck_msdos" name="platform/external/fsck_msdos" groups="pdk" remote="aosp" />
    <project path="external/fsverity-utils" name="platform/external/fsverity-utils" groups="pdk" remote="aosp" />
    <project path="external/FXdiv" name="platform/external/FXdiv" groups="pdk" remote="aosp" />
-@@ -285,7 +285,7 @@
+@@ -283,9 +283,9 @@
+   <project path="external/libfuse" name="platform/external/libfuse" groups="pdk" remote="aosp" />
+   <project path="external/libgav1" name="platform/external/libgav1" groups="pdk" remote="aosp" />
    <project path="external/libgsm" name="platform/external/libgsm" groups="pdk" remote="aosp" />
-   <project path="external/libhevc" name="platform/external/libhevc" groups="pdk" remote="aosp" />
+-  <project path="external/libhevc" name="platform/external/libhevc" groups="pdk" remote="aosp" />
++  <project path="external/libhevc" name="LineageOS/android_external_libhevc" groups="pdk" />
    <project path="external/libiio" name="platform/external/libiio" groups="pdk" remote="aosp" />
 -  <project path="external/libjpeg-turbo" name="platform/external/libjpeg-turbo" groups="pdk" remote="aosp" />
 +  <project path="external/libjpeg-turbo" name="LineageOS/android_external_libjpeg-turbo" groups="pdk" />
@@ -126,6 +131,15 @@ index 7dfed8f..edadd5e 100644
    <project path="packages/apps/Messaging" name="LineageOS/android_packages_apps_Messaging" groups="pdk-fs" />
    <project path="packages/apps/Music" name="platform/packages/apps/Music" groups="pdk-fs" remote="aosp" />
    <project path="packages/apps/MusicFX" name="platform/packages/apps/MusicFX" groups="pdk-fs" remote="aosp" />
+@@ -905,7 +905,7 @@
+   <project path="packages/apps/Traceur" name="platform/packages/apps/Traceur" groups="pdk-fs" remote="aosp" />
+   <project path="packages/apps/Trebuchet" name="LineageOS/android_packages_apps_Trebuchet" groups="pdk-fs" />
+   <project path="packages/apps/TvSettings" name="LineageOS/android_packages_apps_TvSettings" groups="pdk-fs" />
+-  <project path="packages/apps/TV" name="platform/packages/apps/TV" groups="pdk" remote="aosp" />
++  <project path="packages/apps/TV" name="LineageOS/android_packages_apps_TV" groups="pdk" />
+   <project path="packages/apps/UniversalMediaPlayer" name="platform/packages/apps/UniversalMediaPlayer" remote="aosp" />
+   <project path="packages/apps/WallpaperPicker" name="platform/packages/apps/WallpaperPicker" groups="pdk-fs" remote="aosp" />
+   <project path="packages/apps/WallpaperPicker2" name="LineageOS/android_packages_apps_WallpaperPicker2" groups="pdk-fs" />
 @@ -919,14 +919,14 @@
    <project path="packages/modules/BootPrebuilt/5.4/arm64" name="platform/packages/modules/BootPrebuilt/5.4/arm64" groups="pdk" clone-depth="1" remote="aosp" />
    <project path="packages/modules/BootPrebuilt/5.10/arm64" name="platform/packages/modules/BootPrebuilt/5.10/arm64" groups="pdk" clone-depth="1" remote="aosp" />
@@ -152,6 +166,24 @@ index 7dfed8f..edadd5e 100644
    <project path="packages/services/Iwlan" name="platform/packages/services/Iwlan" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
    <project path="packages/services/Mms" name="LineageOS/android_packages_services_Mms" groups="pdk-cw-fs,pdk-fs" />
    <project path="packages/services/Mtp" name="platform/packages/services/Mtp" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
+@@ -1043,7 +1043,7 @@
+   <project path="system/gsid" name="platform/system/gsid" groups="pdk" remote="aosp" />
+   <project path="system/hardware/interfaces" name="platform/system/hardware/interfaces" groups="pdk" remote="aosp" />
+   <project path="system/hwservicemanager" name="platform/system/hwservicemanager" groups="pdk" remote="aosp" />
+-  <project path="system/incremental_delivery" name="platform/system/incremental_delivery" groups="pdk" remote="aosp" />
++  <project path="system/incremental_delivery" name="LineageOS/android_system_incremental_delivery" groups="pdk" />
+   <project path="system/iorap" name="platform/system/iorap" groups="pdk" remote="aosp" />
+   <project path="system/keymaster" name="LineageOS/android_system_keymaster" groups="pdk" />
+   <project path="system/libartpalette" name="platform/system/libartpalette" groups="pdk" remote="aosp" />
+@@ -1067,7 +1067,7 @@
+   <project path="system/memory/libmemunreachable" name="platform/system/memory/libmemunreachable" groups="pdk" remote="aosp" />
+   <project path="system/memory/lmkd" name="LineageOS/android_system_memory_lmkd" groups="pdk" />
+   <!--<project path="system/netd" name="platform/system/netd" groups="pdk" remote="aosp" />-->
+-  <project path="system/nfc" name="platform/system/nfc" groups="pdk" remote="aosp" />
++  <project path="system/nfc" name="LineageOS/android_system_nfc" groups="pdk" />
+   <project path="system/nvram" name="platform/system/nvram" groups="pdk" remote="aosp" />
+   <project path="system/security" name="LineageOS/android_system_security" groups="pdk" />
+   <!--<project path="system/sepolicy" name="LineageOS/android_system_sepolicy" groups="pdk" />-->
 diff --git a/snippets/lineage.xml b/snippets/lineage.xml
 index 969b2f2..79c2e94 100644
 --- a/snippets/lineage.xml
@@ -163,7 +195,7 @@ index 969b2f2..79c2e94 100644
 +  <project path="vendor/apn" name="LineageOS/android_vendor_apn" revision="main" />
    <project path="vendor/crowdin" name="LineageOS/android_vendor_crowdin" />
    <!--<project path="vendor/lineage" name="LineageOS/android_vendor_lineage" />-->
- 
+
 EOF
 git -C .repo/manifests apply /tmp/manifests.patch
 resync_repo external/freetype
@@ -179,6 +211,10 @@ resync_repo vendor/apn
 resync_repo hardware/st/nfc
 resync_repo external/libpng
 resync_repo packages/services/Car
+resync_repo external/libhevc
+resync_repo packages/apps/TV
+resync_repo system/incremental_delivery
+resync_repo system/nfc
 
 # Since March 2026 los20 upstream support ended, so patch version string ourselves
 cat <<"EOF">/tmp/security-string.patch
@@ -191,7 +227,7 @@ index 924f81b..6c93aee 100644
      #  It must match one of the Android Security Patch Level strings of the Public Security Bulletins.
      #  If there is no $PLATFORM_SECURITY_PATCH set, keep it empty.
 -    PLATFORM_SECURITY_PATCH := 2026-02-01
-+    PLATFORM_SECURITY_PATCH := 2026-06-01
++    PLATFORM_SECURITY_PATCH := 2026-09-01
  endif
 
  include $(BUILD_SYSTEM)/version_util.mk
