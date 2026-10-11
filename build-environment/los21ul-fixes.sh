@@ -1,5 +1,5 @@
 #!/bin/sh
-# September 2026 Android & LineageOS security patches
+# October 2026 Android & LineageOS security patches
 
 export BASEDIR=~/android/lineage-21.0/
 
@@ -18,15 +18,20 @@ merge_upstream() {
   cd $BASEDIR
 }
 
+resync_repo() {
+   echo -e "\n=== Re-sync $1 ==="
+   repo sync --force-sync $1
+}
+
 export GIT_EDITOR='true git commit'
 cd $BASEDIR
 
 # April & May & June & August & September & December 2025 & March 2026 & April 2026 & May 2026 & June 2026
-# & September 2026
+# & September 2026 & October 2026
 merge_upstream frameworks/base
 # April 2025 & September 2025 & December 2025 & March 2026
 merge_upstream frameworks/native
-# September 2025 & December 2025 & May 2026 & September 2026
+# September 2025 & December 2025 & May 2026 & September 2026 & October 2026
 merge_upstream frameworks/opt/telephony
 # April & May & June & September & November & December 2025 & June 2026 & September 2026
 merge_upstream packages/modules/Bluetooth
@@ -36,7 +41,7 @@ merge_upstream packages/services/Telephony
 merge_upstream art
 # June 2025 & September 2025 & March 2026 & September 2026
 merge_upstream frameworks/av
-# August 2025 & September 2025 & December 2025 & May 2026
+# August 2025 & September 2025 & December 2025 & May 2026 & October 2026
 merge_upstream vendor/lineage
 # September 2026
 merge_upstream bionic
@@ -69,9 +74,14 @@ merge_upstream hardware/interfaces
 #  packages/apps/TV
 #  system/incremental_delivery
 #  system/nfc
+# October 2026 - track LineageOS modules for
+#  packages/services/BuiltInPrintService
+#  system/libfmq
+#  system/libufdt
+echo -e "\n=== LineageOS fork tracking updates ==="
 cat <<EOF>/tmp/manifest.patch
 diff --git a/default.xml b/default.xml
-index 4803dd4..49757e3 100644
+index 4803dd4..1b0fc9d 100644
 --- a/default.xml
 +++ b/default.xml
 @@ -136,7 +136,7 @@
@@ -183,7 +193,16 @@ index 4803dd4..49757e3 100644
    <project path="packages/modules/vndk" name="platform/packages/modules/vndk" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
    <project path="packages/modules/Wifi" name="LineageOS/android_packages_modules_Wifi" groups="pdk-cw-fs,pdk-fs,sysui-studio" />
    <project path="packages/providers/BlockedNumberProvider" name="LineageOS/android_packages_providers_BlockedNumberProvider" groups="pdk-fs" />
-@@ -1216,7 +1216,7 @@
+@@ -1122,7 +1122,7 @@
+   <project path="packages/screensavers/Basic" name="platform/packages/screensavers/Basic" groups="pdk-fs" remote="aosp" />
+   <project path="packages/screensavers/PhotoTable" name="LineageOS/android_packages_screensavers_PhotoTable" groups="pdk-fs" />
+   <project path="packages/services/AlternativeNetworkAccess" name="platform/packages/services/AlternativeNetworkAccess" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
+-  <project path="packages/services/BuiltInPrintService" name="platform/packages/services/BuiltInPrintService" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
++  <project path="packages/services/BuiltInPrintService" name="LineageOS/android_packages_services_BuiltInPrintService" groups="pdk-cw-fs,pdk-fs" />
+   <project path="packages/services/Car" name="LineageOS/android_packages_services_Car" groups="pdk-cw-fs,pdk-fs" />
+   <project path="packages/services/DeviceAsWebcam" name="platform/packages/services/DeviceAsWebcam" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
+   <project path="packages/services/Iwlan" name="platform/packages/services/Iwlan" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
+@@ -1216,20 +1216,20 @@
    <project path="system/gsid" name="platform/system/gsid" groups="pdk" remote="aosp" />
    <project path="system/hardware/interfaces" name="platform/system/hardware/interfaces" groups="pdk,sysui-studio" remote="aosp" />
    <project path="system/hwservicemanager" name="platform/system/hwservicemanager" groups="pdk" remote="aosp" />
@@ -192,6 +211,21 @@ index 4803dd4..49757e3 100644
    <project path="system/iorap" name="platform/system/iorap" groups="pdk" remote="aosp" />
    <project path="system/keymaster" name="LineageOS/android_system_keymaster" groups="pdk" />
    <project path="system/keymint" name="LineageOS/android_system_keymint" groups="pdk" />
+   <project path="system/libartpalette" name="platform/system/libartpalette" groups="pdk" remote="aosp" />
+   <project path="system/libbase" name="platform/system/libbase" groups="pdk" remote="aosp" />
+   <project path="system/libcppbor" name="platform/system/libcppbor" groups="pdk" remote="aosp" />
+-  <project path="system/libfmq" name="platform/system/libfmq" groups="pdk" remote="aosp" />
++  <project path="system/libfmq" name="LineageOS/android_system_libfmq" groups="pdk" />
+   <!--<project path="system/libhidl" name="LineageOS/android_system_libhidl" groups="pdk,sysui-studio" />-->
+   <!--<project path="system/libhwbinder" name="platform/system/libhwbinder" groups="pdk" remote="aosp" />-->
+   <project path="system/libprocinfo" name="platform/system/libprocinfo" groups="pdk" remote="aosp" />
+   <project path="system/librustutils" name="platform/system/librustutils" groups="pdk" remote="aosp" />
+   <project path="system/libsysprop" name="platform/system/libsysprop" groups="pdk" remote="aosp" />
+-  <project path="system/libufdt" name="platform/system/libufdt" groups="pdk" remote="aosp" />
++  <project path="system/libufdt" name="LineageOS/android_system_libufdt" groups="pdk" />
+   <project path="system/libvintf" name="platform/system/libvintf" groups="pdk" remote="aosp" />
+   <project path="system/libziparchive" name="LineageOS/android_system_libziparchive" groups="pdk" />
+   <project path="system/linkerconfig" name="platform/system/linkerconfig" groups="pdk" remote="aosp" />
 @@ -1242,7 +1242,7 @@
    <project path="system/memory/libmemunreachable" name="platform/system/memory/libmemunreachable" groups="pdk" remote="aosp" />
    <project path="system/memory/lmkd" name="platform/system/memory/lmkd" groups="pdk" remote="aosp" />
@@ -221,26 +255,29 @@ index 05142b8..251527c 100644
 +  <project path="vendor/apn" name="LineageOS/android_vendor_apn" revision="main" />
    <project path="vendor/crowdin" name="LineageOS/android_vendor_crowdin" />
    <!--<project path="vendor/lineage" name="LineageOS/android_vendor_lineage" />-->
-
+ 
 EOF
 git -C .repo/manifests apply /tmp/manifest.patch
-repo sync --force-sync packages/apps/ManagedProvisioning
-repo sync --force-sync packages/modules/CellBroadcastService
-repo sync --force-sync external/sqlite
-repo sync --force-sync packages/apps/CertInstaller
-repo sync --force-sync vendor/apn
-repo sync --force-sync external/cldr
-repo sync --force-sync external/dng_sdk
-repo sync --force-sync external/icu
-repo sync --force-sync packages/modules/Virtualization
-repo sync --force-sync system/timezone
-repo sync --force-sync external/expat
-repo sync --force-sync packages/apps/KeyChain
-repo sync --force-sync external/freetype
-repo sync --force-sync external/libhevc
-repo sync --force-sync packages/apps/TV
-repo sync --force-sync system/incremental_delivery
-repo sync --force-sync system/nfc
+resync_repo packages/apps/ManagedProvisioning
+resync_repo packages/modules/CellBroadcastService
+resync_repo external/sqlite
+resync_repo packages/apps/CertInstaller
+resync_repo vendor/apn
+resync_repo external/cldr
+resync_repo external/dng_sdk
+resync_repo external/icu
+resync_repo packages/modules/Virtualization
+resync_repo system/timezone
+resync_repo external/expat
+resync_repo packages/apps/KeyChain
+resync_repo external/freetype
+resync_repo external/libhevc
+resync_repo packages/apps/TV
+resync_repo system/incremental_delivery
+resync_repo system/nfc
+resync_repo packages/services/BuiltInPrintService
+resync_repo system/libfmq
+resync_repo system/libufdt
 
 # Fix ADB Breakage post QPR1 by reverting to QPR1 tree
 echo -e "\n=== packages/modules/adb ==="

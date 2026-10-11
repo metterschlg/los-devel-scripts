@@ -1,5 +1,5 @@
 #!/bin/sh
-# September 2026 Android & LineageOS security patches
+# October 2026 Android & LineageOS security patches
 
 export BASEDIR=~/android/lineage-20.0/
 
@@ -27,7 +27,7 @@ export GIT_EDITOR='true git commit'
 cd $BASEDIR
 
 # April & May & June 2025 & August 2025 & September 2025 & December 2025 & May 2026
-# & June 2026 & September 2026
+# & June 2026 & September 2026 & October 2026
 merge_upstream frameworks/base
 # April & May & June 2025 & September 2025 & November 2025 & December 2025 & June 2026
 # & September 2026
@@ -40,20 +40,22 @@ merge_upstream frameworks/av
 merge_upstream packages/modules/Connectivity
 # September 2025
 merge_upstream packages/apps/Nfc
-# September 2025 & December 2025 & May 2026
+# September 2025 & December 2025 & May 2026 & October 2026
 merge_upstream frameworks/opt/telephony
 # September 2025 & December 2025 & May 2026
 merge_upstream frameworks/native
-# May 2026
+# May 2026 & October 2026
 merge_upstream vendor/lineage
 
 # After May 2026 vendor/lineage patch, need to run envsetup.sh again so that repopick keeps working
 source build/envsetup.sh
 
-# April & May & June & September & December 2025 & June 2026 & September 2026 own fork tracking
+# April & May & June & September & December 2025 & June 2026 & September 2026
+# & October 2026 own fork tracking
+echo -e "\n=== LineageOS fork tracking updates ==="
 cat <<EOF>/tmp/manifests.patch
 diff --git a/default.xml b/default.xml
-index 7dfed8f..618cb81 100644
+index 7dfed8f..e3634d0 100644
 --- a/default.xml
 +++ b/default.xml
 @@ -161,7 +161,7 @@
@@ -157,11 +159,13 @@ index 7dfed8f..618cb81 100644
    <project path="packages/modules/IPsec" name="platform/packages/modules/IPsec" groups="pdk" remote="aosp" />
    <project path="packages/modules/Media" name="platform/packages/modules/Media" groups="pdk" remote="aosp" />
    <project path="packages/modules/ModuleMetadata" name="platform/packages/modules/ModuleMetadata" groups="pdk" remote="aosp" />
-@@ -960,7 +960,7 @@
+@@ -959,8 +959,8 @@
+   <project path="packages/screensavers/Basic" name="platform/packages/screensavers/Basic" groups="pdk-fs" remote="aosp" />
    <project path="packages/screensavers/PhotoTable" name="LineageOS/android_packages_screensavers_PhotoTable" groups="pdk-fs" />
    <project path="packages/services/AlternativeNetworkAccess" name="platform/packages/services/AlternativeNetworkAccess" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
-   <project path="packages/services/BuiltInPrintService" name="platform/packages/services/BuiltInPrintService" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
+-  <project path="packages/services/BuiltInPrintService" name="platform/packages/services/BuiltInPrintService" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
 -  <project path="packages/services/Car" name="platform/packages/services/Car" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
++  <project path="packages/services/BuiltInPrintService" name="LineageOS/android_packages_services_BuiltInPrintService" groups="pdk-cw-fs,pdk-fs" />
 +  <project path="packages/services/Car" name="LineageOS/android_packages_services_Car" groups="pdk-cw-fs,pdk-fs" />
    <project path="packages/services/Iwlan" name="platform/packages/services/Iwlan" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
    <project path="packages/services/Mms" name="LineageOS/android_packages_services_Mms" groups="pdk-cw-fs,pdk-fs" />
@@ -175,6 +179,15 @@ index 7dfed8f..618cb81 100644
    <project path="system/iorap" name="platform/system/iorap" groups="pdk" remote="aosp" />
    <project path="system/keymaster" name="LineageOS/android_system_keymaster" groups="pdk" />
    <project path="system/libartpalette" name="platform/system/libartpalette" groups="pdk" remote="aosp" />
+@@ -1054,7 +1054,7 @@
+   <project path="system/libprocinfo" name="platform/system/libprocinfo" groups="pdk" remote="aosp" />
+   <project path="system/librustutils" name="platform/system/librustutils" groups="pdk" remote="aosp" />
+   <project path="system/libsysprop" name="platform/system/libsysprop" groups="pdk" remote="aosp" />
+-  <project path="system/libufdt" name="platform/system/libufdt" groups="pdk" remote="aosp" />
++  <project path="system/libufdt" name="LineageOS/android_system_libufdt" groups="pdk" />
+   <project path="system/libvintf" name="platform/system/libvintf" groups="pdk" remote="aosp" />
+   <project path="system/libziparchive" name="LineageOS/android_system_libziparchive" groups="pdk" />
+   <project path="system/linkerconfig" name="platform/system/linkerconfig" groups="pdk" remote="aosp" />
 @@ -1067,7 +1067,7 @@
    <project path="system/memory/libmemunreachable" name="platform/system/memory/libmemunreachable" groups="pdk" remote="aosp" />
    <project path="system/memory/lmkd" name="LineageOS/android_system_memory_lmkd" groups="pdk" />
@@ -195,7 +208,7 @@ index 969b2f2..79c2e94 100644
 +  <project path="vendor/apn" name="LineageOS/android_vendor_apn" revision="main" />
    <project path="vendor/crowdin" name="LineageOS/android_vendor_crowdin" />
    <!--<project path="vendor/lineage" name="LineageOS/android_vendor_lineage" />-->
-
+ 
 EOF
 git -C .repo/manifests apply /tmp/manifests.patch
 resync_repo external/freetype
@@ -215,6 +228,8 @@ resync_repo external/libhevc
 resync_repo packages/apps/TV
 resync_repo system/incremental_delivery
 resync_repo system/nfc
+resync_repo packages/services/BuiltInPrintService
+resync_repo system/libufdt
 
 # Since March 2026 los20 upstream support ended, so patch version string ourselves
 cat <<"EOF">/tmp/security-string.patch
@@ -227,7 +242,7 @@ index 924f81b..6c93aee 100644
      #  It must match one of the Android Security Patch Level strings of the Public Security Bulletins.
      #  If there is no $PLATFORM_SECURITY_PATCH set, keep it empty.
 -    PLATFORM_SECURITY_PATCH := 2026-02-01
-+    PLATFORM_SECURITY_PATCH := 2026-09-01
++    PLATFORM_SECURITY_PATCH := 2026-10-01
  endif
 
  include $(BUILD_SYSTEM)/version_util.mk
