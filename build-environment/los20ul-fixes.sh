@@ -1,5 +1,5 @@
 #!/bin/sh
-# October 2026 Android & LineageOS security patches
+# November 2026 Android & LineageOS security patches
 
 export BASEDIR=~/android/lineage-20.0/
 
@@ -27,22 +27,22 @@ export GIT_EDITOR='true git commit'
 cd $BASEDIR
 
 # April & May & June 2025 & August 2025 & September 2025 & December 2025 & May 2026
-# & June 2026 & September 2026 & October 2026
+# & June 2026 & September 2026 & October 2026 & November 2026
 merge_upstream frameworks/base
 # April & May & June 2025 & September 2025 & November 2025 & December 2025 & June 2026
-# & September 2026
+# & September 2026 & November 2026
 merge_upstream packages/modules/Bluetooth
-# May 2025 & September 2025
+# May 2025 & September 2025 & November 2026
 merge_upstream packages/modules/Wifi
-# June 2025 & September 2025 & May 2026 & September 2026
+# June 2025 & September 2025 & May 2026 & September 2026 & November 2026
 merge_upstream frameworks/av
 # June 2025
 merge_upstream packages/modules/Connectivity
 # September 2025
 merge_upstream packages/apps/Nfc
-# September 2025 & December 2025 & May 2026 & October 2026
+# September 2025 & December 2025 & May 2026 & October 2026 & November 2026
 merge_upstream frameworks/opt/telephony
-# September 2025 & December 2025 & May 2026
+# September 2025 & December 2025 & May 2026 & November 2026
 merge_upstream frameworks/native
 # May 2026 & October 2026
 merge_upstream vendor/lineage
@@ -55,9 +55,18 @@ source build/envsetup.sh
 echo -e "\n=== LineageOS fork tracking updates ==="
 cat <<EOF>/tmp/manifests.patch
 diff --git a/default.xml b/default.xml
-index 7dfed8f..e3634d0 100644
+index 7dfed8f..af6350b 100644
 --- a/default.xml
 +++ b/default.xml
+@@ -82,7 +82,7 @@
+   <project path="device/google/gs-common" name="device/google/gs-common" groups="device,slider,bluejay,pdk-gs-arm" remote="aosp" />
+   <project path="device/google/vrservices" name="device/google/vrservices" groups="pdk" remote="aosp" />
+   <project path="device/sample" name="device/sample" groups="pdk" remote="aosp" />
+-  <project path="external/aac" name="platform/external/aac" groups="pdk" remote="aosp" />
++  <project path="external/aac" name="LineageOS/android_external_aac" groups="pdk" />
+   <project path="external/abseil-cpp" name="platform/external/abseil-cpp" groups="pdk" remote="aosp" />
+   <project path="external/adt-infra" name="platform/external/adt-infra" groups="adt-infra,notdefault,pdk-fs" remote="aosp" />
+   <project path="external/android-clat" name="platform/external/android-clat" groups="pdk" remote="aosp" />
 @@ -161,7 +161,7 @@
    <project path="external/escapevelocity" name="platform/external/escapevelocity" groups="pdk" remote="aosp" />
    <project path="external/ethtool" name="platform/external/ethtool" groups="pdk" remote="aosp" />
@@ -106,6 +115,15 @@ index 7dfed8f..e3634d0 100644
    <project path="external/squashfs-tools" name="platform/external/squashfs-tools" groups="pdk" remote="aosp" />
    <project path="external/stardoc" name="platform/external/stardoc" groups="pdk" remote="aosp" />
    <project path="external/starlark-go" name="platform/external/starlark-go" groups="pdk" remote="aosp" />
+@@ -690,7 +690,7 @@
+   <project path="external/toybox" name="platform/external/toybox" groups="pdk" remote="aosp" />
+   <project path="external/tpm2-tss" name="platform/external/tpm2-tss" groups="pdk" remote="aosp" />
+   <project path="external/trace-cmd" name="platform/external/trace-cmd" groups="pdk" remote="aosp" />
+-  <project path="external/tremolo" name="platform/external/tremolo" groups="pdk" remote="aosp" />
++  <project path="external/tremolo" name="LineageOS/android_external_tremolo" groups="pdk" />
+   <project path="external/turbine" name="platform/external/turbine" groups="pdk" remote="aosp" />
+   <project path="external/unicode" name="platform/external/unicode" groups="pdk" remote="aosp" />
+   <project path="external/universal-tween-engine" name="platform/external/universal-tween-engine" remote="aosp" />
 @@ -817,7 +817,7 @@
    <project path="hardware/qcom/wlan" name="LineageOS/android_hardware_qcom_wlan" groups="qcom,qcom_wlan,pdk-qcom" />
    <!--<project path="hardware/ril" name="LineageOS/android_hardware_ril" groups="pdk" />-->
@@ -159,17 +177,19 @@ index 7dfed8f..e3634d0 100644
    <project path="packages/modules/IPsec" name="platform/packages/modules/IPsec" groups="pdk" remote="aosp" />
    <project path="packages/modules/Media" name="platform/packages/modules/Media" groups="pdk" remote="aosp" />
    <project path="packages/modules/ModuleMetadata" name="platform/packages/modules/ModuleMetadata" groups="pdk" remote="aosp" />
-@@ -959,8 +959,8 @@
+@@ -959,9 +959,9 @@
    <project path="packages/screensavers/Basic" name="platform/packages/screensavers/Basic" groups="pdk-fs" remote="aosp" />
    <project path="packages/screensavers/PhotoTable" name="LineageOS/android_packages_screensavers_PhotoTable" groups="pdk-fs" />
    <project path="packages/services/AlternativeNetworkAccess" name="platform/packages/services/AlternativeNetworkAccess" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
 -  <project path="packages/services/BuiltInPrintService" name="platform/packages/services/BuiltInPrintService" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
 -  <project path="packages/services/Car" name="platform/packages/services/Car" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
+-  <project path="packages/services/Iwlan" name="platform/packages/services/Iwlan" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
 +  <project path="packages/services/BuiltInPrintService" name="LineageOS/android_packages_services_BuiltInPrintService" groups="pdk-cw-fs,pdk-fs" />
 +  <project path="packages/services/Car" name="LineageOS/android_packages_services_Car" groups="pdk-cw-fs,pdk-fs" />
-   <project path="packages/services/Iwlan" name="platform/packages/services/Iwlan" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
++  <project path="packages/services/Iwlan" name="LineageOS/android_packages_services_Iwlan" groups="pdk-cw-fs,pdk-fs" />
    <project path="packages/services/Mms" name="LineageOS/android_packages_services_Mms" groups="pdk-cw-fs,pdk-fs" />
    <project path="packages/services/Mtp" name="platform/packages/services/Mtp" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
+   <project path="packages/services/Telecomm" name="LineageOS/android_packages_services_Telecomm" groups="pdk-cw-fs,pdk-fs" />
 @@ -1043,7 +1043,7 @@
    <project path="system/gsid" name="platform/system/gsid" groups="pdk" remote="aosp" />
    <project path="system/hardware/interfaces" name="platform/system/hardware/interfaces" groups="pdk" remote="aosp" />
@@ -211,25 +231,27 @@ index 969b2f2..79c2e94 100644
  
 EOF
 git -C .repo/manifests apply /tmp/manifests.patch
+resync_repo external/aac
+resync_repo external/expat
 resync_repo external/freetype
+resync_repo external/libhevc
 resync_repo external/libjpeg-turbo
+resync_repo external/libpng
 resync_repo external/sqlite
-resync_repo packages/apps/CellBroadcastReceiver
+resync_repo external/tremolo
+resync_repo hardware/st/nfc
 resync_repo packages/apps/CertInstaller
 resync_repo packages/apps/ManagedProvisioning
+resync_repo packages/apps/TV
 resync_repo packages/modules/CellBroadcastService
 resync_repo packages/modules/IntentResolver
-resync_repo external/expat
-resync_repo vendor/apn
-resync_repo hardware/st/nfc
-resync_repo external/libpng
-resync_repo packages/services/Car
-resync_repo external/libhevc
-resync_repo packages/apps/TV
-resync_repo system/incremental_delivery
-resync_repo system/nfc
 resync_repo packages/services/BuiltInPrintService
+resync_repo packages/services/Car
+resync_repo packages/services/Iwlan
+resync_repo system/incremental_delivery
 resync_repo system/libufdt
+resync_repo system/nfc
+resync_repo vendor/apn
 
 # Since March 2026 los20 upstream support ended, so patch version string ourselves
 cat <<"EOF">/tmp/security-string.patch
@@ -242,7 +264,7 @@ index 924f81b..6c93aee 100644
      #  It must match one of the Android Security Patch Level strings of the Public Security Bulletins.
      #  If there is no $PLATFORM_SECURITY_PATCH set, keep it empty.
 -    PLATFORM_SECURITY_PATCH := 2026-02-01
-+    PLATFORM_SECURITY_PATCH := 2026-10-01
++    PLATFORM_SECURITY_PATCH := 2026-11-01
  endif
 
  include $(BUILD_SYSTEM)/version_util.mk
