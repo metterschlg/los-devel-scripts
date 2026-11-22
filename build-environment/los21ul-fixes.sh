@@ -1,5 +1,5 @@
 #!/bin/sh
-# October 2026 Android & LineageOS security patches
+# November 2026 Android & LineageOS security patches
 
 export BASEDIR=~/android/lineage-21.0/
 
@@ -27,28 +27,30 @@ export GIT_EDITOR='true git commit'
 cd $BASEDIR
 
 # April & May & June & August & September & December 2025 & March 2026 & April 2026 & May 2026 & June 2026
-# & September 2026 & October 2026
+# & September 2026 & October 2026 & November 2026
 merge_upstream frameworks/base
-# April 2025 & September 2025 & December 2025 & March 2026
+# April 2025 & September 2025 & December 2025 & March 2026 & November 2026
 merge_upstream frameworks/native
-# September 2025 & December 2025 & May 2026 & September 2026 & October 2026
+# September 2025 & December 2025 & May 2026 & September 2026 & October 2026 & November 2026
 merge_upstream frameworks/opt/telephony
-# April & May & June & September & November & December 2025 & June 2026 & September 2026
+# April & May & June & September & November & December 2025 & June 2026 & September 2026 & November 2026
 merge_upstream packages/modules/Bluetooth
 # April 2025 & September 2025 & December 2025 & June 2026 & September 2026
 merge_upstream packages/services/Telephony
 # June 2025 & September 2025
 merge_upstream art
-# June 2025 & September 2025 & March 2026 & September 2026
+# June 2025 & September 2025 & March 2026 & September 2026 & November 2026
 merge_upstream frameworks/av
 # August 2025 & September 2025 & December 2025 & May 2026 & October 2026
 merge_upstream vendor/lineage
 # September 2026
 merge_upstream bionic
-# September 2026
+# September 2026 & November 2026
 merge_upstream external/wpa_supplicant_8
-# September 2026
+# September 2026 & November 2026
 merge_upstream hardware/interfaces
+# November 2026
+merge_upstream packages/apps/Nfc
 
 # June 2025 - track LineageOS forks for
 #  packages/apps/ManagedProvisioning
@@ -74,16 +76,32 @@ merge_upstream hardware/interfaces
 #  packages/apps/TV
 #  system/incremental_delivery
 #  system/nfc
-# October 2026 - track LineageOS modules for
+# October 2026 - track LineageOS forks for
 #  packages/services/BuiltInPrintService
 #  system/libfmq
 #  system/libufdt
+# November 2026 - track LineageOS forks for
+#  external/aac
+#  external/libpng
+#  external/tremolo
+#  packages/modules/NeuralNetworks
+#  packages/services/Iwlan
+#  system/ca-certificates
 echo -e "\n=== LineageOS fork tracking updates ==="
 cat <<EOF>/tmp/manifest.patch
 diff --git a/default.xml b/default.xml
-index 4803dd4..1b0fc9d 100644
+index 4803dd4..d8ea06a 100644
 --- a/default.xml
 +++ b/default.xml
+@@ -83,7 +83,7 @@
+   <project path="device/google/cuttlefish_vmm" name="device/google/cuttlefish_vmm" groups="device,pdk" clone-depth="1" remote="aosp" />
+   <project path="device/google/vrservices" name="device/google/vrservices" groups="pdk" remote="aosp" />
+   <project path="device/sample" name="device/sample" groups="pdk" remote="aosp" />
+-  <project path="external/aac" name="platform/external/aac" groups="pdk" remote="aosp" />
++  <project path="external/aac" name="LineageOS/android_external_aac" groups="pdk" />
+   <project path="external/abseil-cpp" name="platform/external/abseil-cpp" groups="pdk" remote="aosp" />
+   <project path="external/AFLplusplus" name="platform/external/AFLplusplus" groups="pdk" remote="aosp" />
+   <project path="external/android-key-attestation" name="platform/external/android-key-attestation" groups="pdk" remote="aosp" />
 @@ -136,7 +136,7 @@
    <project path="external/cbor-java" name="platform/external/cbor-java" groups="pdk" remote="aosp" />
    <project path="external/chromium-trace" name="platform/external/chromium-trace" groups="pdk" remote="aosp" />
@@ -147,6 +165,15 @@ index 4803dd4..1b0fc9d 100644
    <project path="external/spdx-tools" name="platform/external/spdx-tools" groups="pdk" remote="aosp" />
    <project path="external/squashfs-tools" name="platform/external/squashfs-tools" groups="pdk" remote="aosp" />
    <project path="external/stardoc" name="platform/external/stardoc" groups="pdk" remote="aosp" />
+@@ -842,7 +842,7 @@
+   <project path="external/toybox" name="platform/external/toybox" groups="pdk" remote="aosp" />
+   <project path="external/tpm2-tss" name="platform/external/tpm2-tss" groups="pdk" remote="aosp" />
+   <project path="external/trace-cmd" name="platform/external/trace-cmd" groups="pdk" remote="aosp" />
+-  <project path="external/tremolo" name="platform/external/tremolo" groups="pdk" remote="aosp" />
++  <project path="external/tremolo" name="LineageOS/android_external_tremolo" groups="pdk" />
+   <project path="external/truth" name="platform/external/truth" groups="pdk" remote="aosp" />
+   <project path="external/turbine" name="platform/external/turbine" groups="pdk" remote="aosp" />
+   <project path="external/unicode" name="platform/external/unicode" groups="pdk" remote="aosp" />
 @@ -1025,15 +1025,15 @@
    <project path="packages/apps/Car/SystemUpdater" name="platform/packages/apps/Car/SystemUpdater" groups="pdk-fs" remote="aosp" />
    <project path="packages/apps/CarrierConfig" name="platform/packages/apps/CarrierConfig" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
@@ -184,6 +211,15 @@ index 4803dd4..1b0fc9d 100644
    <project path="packages/modules/common" name="LineageOS/android_packages_modules_common" groups="pdk-cw-fs,pdk-fs" />
    <project path="packages/modules/ConfigInfrastructure" name="platform/packages/modules/ConfigInfrastructure" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
    <!--<project path="packages/modules/Connectivity" name="LineageOS/android_packages_modules_Connectivity" groups="pdk-cw-fs,pdk-fs" />-->
+@@ -1089,7 +1089,7 @@
+   <project path="packages/modules/ModuleMetadata" name="platform/packages/modules/ModuleMetadata" groups="pdk" remote="aosp" />
+   <project path="packages/modules/NetworkPermissionConfig" name="platform/packages/modules/NetworkPermissionConfig" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
+   <!--<project path="packages/modules/NetworkStack" name="platform/packages/modules/NetworkStack" groups="pdk-cw-fs,pdk-fs" remote="aosp" />-->
+-  <project path="packages/modules/NeuralNetworks" name="platform/packages/modules/NeuralNetworks" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
++  <project path="packages/modules/NeuralNetworks" name="LineageOS/android_packages_modules_NeuralNetworks" groups="pdk-cw-fs,pdk-fs" />
+   <project path="packages/modules/OnDevicePersonalization" name="platform/packages/modules/OnDevicePersonalization" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
+   <project path="packages/modules/Permission" name="LineageOS/android_packages_modules_Permission" groups="pdk-cw-fs,pdk-fs" />
+   <project path="packages/modules/Profiling" name="platform/packages/modules/Profiling" groups="pdk" remote="aosp" />
 @@ -1104,7 +1104,7 @@
    <project path="packages/modules/ThreadNetwork" name="platform/packages/modules/ThreadNetwork" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
    <project path="packages/modules/Uwb" name="platform/packages/modules/Uwb" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
@@ -193,7 +229,7 @@ index 4803dd4..1b0fc9d 100644
    <project path="packages/modules/vndk" name="platform/packages/modules/vndk" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
    <project path="packages/modules/Wifi" name="LineageOS/android_packages_modules_Wifi" groups="pdk-cw-fs,pdk-fs,sysui-studio" />
    <project path="packages/providers/BlockedNumberProvider" name="LineageOS/android_packages_providers_BlockedNumberProvider" groups="pdk-fs" />
-@@ -1122,7 +1122,7 @@
+@@ -1122,10 +1122,10 @@
    <project path="packages/screensavers/Basic" name="platform/packages/screensavers/Basic" groups="pdk-fs" remote="aosp" />
    <project path="packages/screensavers/PhotoTable" name="LineageOS/android_packages_screensavers_PhotoTable" groups="pdk-fs" />
    <project path="packages/services/AlternativeNetworkAccess" name="platform/packages/services/AlternativeNetworkAccess" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
@@ -201,7 +237,20 @@ index 4803dd4..1b0fc9d 100644
 +  <project path="packages/services/BuiltInPrintService" name="LineageOS/android_packages_services_BuiltInPrintService" groups="pdk-cw-fs,pdk-fs" />
    <project path="packages/services/Car" name="LineageOS/android_packages_services_Car" groups="pdk-cw-fs,pdk-fs" />
    <project path="packages/services/DeviceAsWebcam" name="platform/packages/services/DeviceAsWebcam" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
-   <project path="packages/services/Iwlan" name="platform/packages/services/Iwlan" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
+-  <project path="packages/services/Iwlan" name="platform/packages/services/Iwlan" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
++  <project path="packages/services/Iwlan" name="LineageOS/android_packages_services_Iwlan" groups="pdk-cw-fs,pdk-fs" />
+   <project path="packages/services/Mms" name="LineageOS/android_packages_services_Mms" groups="pdk-cw-fs,pdk-fs" />
+   <project path="packages/services/Mtp" name="platform/packages/services/Mtp" groups="pdk-cw-fs,pdk-fs" remote="aosp" />
+   <project path="packages/services/Telecomm" name="LineageOS/android_packages_services_Telecomm" groups="pdk-cw-fs,pdk-fs" />
+@@ -1206,7 +1206,7 @@
+   <project path="system/authgraph" name="platform/system/authgraph" groups="pdk" remote="aosp" />
+   <!--<project path="system/bpf" name="LineageOS/android_system_bpf" groups="pdk" />-->
+   <project path="system/bpfprogs" name="platform/system/bpfprogs" groups="pdk" remote="aosp" />
+-  <project path="system/ca-certificates" name="platform/system/ca-certificates" groups="pdk" remote="aosp" />
++  <project path="system/ca-certificates" name="LineageOS/android_system_ca-certificates" groups="pdk" />
+   <project path="system/chre" name="platform/system/chre" groups="pdk" remote="aosp" />
+   <project path="system/connectivity/wificond" name="platform/system/connectivity/wificond" groups="pdk" remote="aosp" />
+   <!--<project path="system/core" name="LineageOS/android_system_core" groups="pdk" />-->
 @@ -1216,20 +1216,20 @@
    <project path="system/gsid" name="platform/system/gsid" groups="pdk" remote="aosp" />
    <project path="system/hardware/interfaces" name="platform/system/hardware/interfaces" groups="pdk,sysui-studio" remote="aosp" />
@@ -258,26 +307,32 @@ index 05142b8..251527c 100644
  
 EOF
 git -C .repo/manifests apply /tmp/manifest.patch
-resync_repo packages/apps/ManagedProvisioning
-resync_repo packages/modules/CellBroadcastService
-resync_repo external/sqlite
-resync_repo packages/apps/CertInstaller
-resync_repo vendor/apn
+resync_repo external/aac
 resync_repo external/cldr
-resync_repo external/dng_sdk
-resync_repo external/icu
-resync_repo packages/modules/Virtualization
-resync_repo system/timezone
+#resync_repo external/dng_sdk
 resync_repo external/expat
-resync_repo packages/apps/KeyChain
 resync_repo external/freetype
+resync_repo external/icu
 resync_repo external/libhevc
+resync_repo external/libpng
+resync_repo external/sqlite
+resync_repo external/tremolo
+resync_repo packages/apps/CertInstaller
+resync_repo packages/apps/KeyChain
+resync_repo packages/apps/ManagedProvisioning
 resync_repo packages/apps/TV
-resync_repo system/incremental_delivery
-resync_repo system/nfc
+resync_repo packages/modules/CellBroadcastService
+resync_repo packages/modules/NeuralNetworks
+resync_repo packages/modules/Virtualization
 resync_repo packages/services/BuiltInPrintService
+resync_repo packages/services/Iwlan
+resync_repo system/ca-certificates
+resync_repo system/incremental_delivery
 resync_repo system/libfmq
 resync_repo system/libufdt
+resync_repo system/nfc
+resync_repo system/timezone
+resync_repo vendor/apn
 
 # Fix ADB Breakage post QPR1 by reverting to QPR1 tree
 echo -e "\n=== packages/modules/adb ==="
